@@ -1,5 +1,6 @@
 defmodule ExampleConfirmationIssueWeb.Router do
   use ExampleConfirmationIssueWeb, :router
+  use Pow.Phoenix.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -9,9 +10,20 @@ defmodule ExampleConfirmationIssueWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :protected do
+    plug Pow.Plug.RequireAuthenticated, error_handler: Pow.Phoenix.PlugErrorHandler
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
+
+  scope "/" do
+    pipe_through :browser
+
+    pow_routes()
+  end
+
 
   scope "/", ExampleConfirmationIssueWeb do
     pipe_through :browser
