@@ -26,9 +26,14 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :example_confirmation_issue, ExampleConfirmationIssue.Pow.Mailer, adapter: Bamboo.LocalAdapter
+
 config :example_confirmation_issue, :pow,
   user: ExampleConfirmationIssue.Users.User,
-  repo: ExampleConfirmationIssue.Repo
+  repo: ExampleConfirmationIssue.Repo,
+  extensions: [PowEmailConfirmation],
+  controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks,
+  mailer_backend: ExampleConfirmationIssue.Pow.Mailer
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

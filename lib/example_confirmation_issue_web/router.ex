@@ -1,6 +1,7 @@
 defmodule ExampleConfirmationIssueWeb.Router do
   use ExampleConfirmationIssueWeb, :router
   use Pow.Phoenix.Router
+  use Pow.Extension.Phoenix.Router, extensions: [PowEmailConfirmation]
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -22,6 +23,7 @@ defmodule ExampleConfirmationIssueWeb.Router do
     pipe_through :browser
 
     pow_routes()
+    pow_extension_routes()
   end
 
 
